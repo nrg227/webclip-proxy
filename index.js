@@ -79,7 +79,7 @@ app.get('/options', async (req, res) => {
     console.log("📦 Full Notion response:", JSON.stringify(data, null, 2)); // 🔍 log this
 
     // This will fail if properties aren't what we expect
-    const companyOptions = data.properties.Company.select.options.map(opt => opt.name);
+    const companyOptions = data.properties.Company.multi_select.options.map(opt => opt.name);
     const categoryOptions = data.properties.Category.multi_select.options.map(opt => opt.name);
 
     res.json({ companyOptions, categoryOptions });
