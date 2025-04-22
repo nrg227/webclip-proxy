@@ -65,6 +65,30 @@ app.post('/save', async (req, res) => {
   }
 });
 
+app.get('/options', async (req, res) => {
+  try {
+    const response = await fetch(`https://api.notion.com/v1/databases/${DATABASE_ID}`, {
+      headers: {
+        'Authorization': `Bearer ${NOTION_TOKEN}`,
+        'Notion-Version': '2022-06-28'
+      }
+    });
+
+    const data = await response.json();
+
+    const companyOptions = data.properties.Company.select.options.map(opt => opt.name);
+    const categoryOptions = data.properties.Category.multi_select.options.map(opt => opt.name);
+
+    res.json({ companyOptions, categoryOptions });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Failed to fetch Notion options',
+      details: error.message
+    });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
