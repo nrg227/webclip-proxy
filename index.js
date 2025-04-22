@@ -45,7 +45,7 @@ app.post('/save', async (req, res) => {
           },
           'Company': {
             multi_select: [
-            { name: category }
+            { name: company }
             ]
           },
           'Status': {
